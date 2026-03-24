@@ -62,7 +62,7 @@ Provide these sections as a JSON object (return ONLY valid JSON, no markdown):
   ],
   "footerTagline": "string"
 }`,
-      maxTokens: 1500,
+      maxOutputTokens: 1500,
     });
     text = result.text;
   } catch {

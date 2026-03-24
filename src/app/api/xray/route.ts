@@ -165,7 +165,7 @@ Based on this REAL data, provide a structured competitive landscape analysis:
 6. **Competitive Positioning Recommendation** — In 2-3 sentences, how should a new entrant position themselves given this landscape?
 
 Be concise and cite specific products/repos from the data above. Do not invent competitors not present in the data. If data is sparse, say so and reason from first principles.`,
-      maxTokens: 1800,
+      maxOutputTokens: 1800,
     });
     aiAnalysis = text;
   } catch {

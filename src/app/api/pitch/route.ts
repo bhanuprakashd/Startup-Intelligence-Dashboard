@@ -63,7 +63,7 @@ Slides:
 10. The Ask (how much to raise, use of funds, next milestones)
 
 Be specific with numbers. Use the market signals for real data. Format with markdown.`,
-      maxTokens: 3000,
+      maxOutputTokens: 3000,
     });
     pitchDeck = text;
   } catch {

@@ -79,7 +79,7 @@ For each recommendation provide:
 7. **Time to Revenue** — estimated weeks/months
 
 Rank from best match to good match. Be specific to their profile — don't give generic ideas.`,
-      maxTokens: 2500,
+      maxOutputTokens: 2500,
     });
     aiAnalysis = text;
   } catch {

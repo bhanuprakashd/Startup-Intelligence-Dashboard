@@ -72,7 +72,7 @@ For each name provide:
 
 Return ONLY a JSON array, no other text:
 [{"name": "ExampleName", "reason": "Short explanation", "domain": "examplename.com"}]`,
-      maxTokens: 800,
+      maxOutputTokens: 800,
     });
     text = result.text;
   } catch {

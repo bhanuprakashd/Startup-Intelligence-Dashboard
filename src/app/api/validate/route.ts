@@ -66,7 +66,7 @@ Based on these REAL signals, provide a structured viability analysis:
 8. **Next Steps** — 3 concrete actions the founder should take this week
 
 Be concise, data-driven, and honest. Cite specific signals from the data above. Do not make up data.`,
-      maxTokens: 1500,
+      maxOutputTokens: 1500,
     });
     aiAnalysis = text;
   } catch {

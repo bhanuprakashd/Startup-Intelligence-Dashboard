@@ -53,7 +53,7 @@ End with:
 - **First revenue target** and when to expect it
 
 Be extremely specific and actionable. Every task should be something the founder can DO today. No vague advice. Use real tool names, real platform names, real strategies.`,
-      maxTokens: 3000,
+      maxOutputTokens: 3000,
     });
     roadmap = text;
   } catch {

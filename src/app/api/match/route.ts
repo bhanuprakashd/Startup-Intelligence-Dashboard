@@ -98,7 +98,7 @@ Based on your knowledge of the venture capital landscape and the market context 
 4. **Timing Advice** — Is this a good time to raise in ${sectorStr}? Why or why not?
 
 Be specific with real investor names based on your training data. Acknowledge when you're less certain about recent activity. Format with markdown.`,
-      maxTokens: 2000,
+      maxOutputTokens: 2000,
     });
     aiAnalysis = text;
   } catch {
