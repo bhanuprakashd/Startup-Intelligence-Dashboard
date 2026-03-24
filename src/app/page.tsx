@@ -26,6 +26,7 @@ import { LandingPreview } from "@/components/opportunities/landing-preview";
 import { ChatPanel } from "@/components/chat/chat-panel";
 import { MobileNav } from "@/components/layout/mobile-nav";
 import { REFRESH_INTERVALS } from "@/lib/constants";
+import { ErrorBoundary } from "@/components/common/error-boundary";
 
 function shouldShow(active: SectionId, section: SectionId): boolean {
   return active === "overview" || active === section;
@@ -152,8 +153,8 @@ export default function Dashboard() {
           {/* Funding Feed + Charts */}
           {(showFunding || showSectors) && (
             <div className="mb-5 grid gap-4 lg:grid-cols-2">
-              {showFunding && <FundingFeed />}
-              {showSectors && <ChartTabs />}
+              {showFunding && <ErrorBoundary fallback="Funding feed unavailable."><FundingFeed /></ErrorBoundary>}
+              {showSectors && <ErrorBoundary fallback="Charts unavailable."><ChartTabs /></ErrorBoundary>}
             </div>
           )}
 
@@ -216,14 +217,16 @@ export default function Dashboard() {
           {/* AI Opportunity Finder */}
           {showOpportunities && (
             <div className="mb-5">
-              <OpportunityFinder />
+              <ErrorBoundary fallback="Opportunity finder unavailable.">
+                <OpportunityFinder onNavigate={(section) => setActiveSection(section as import("@/components/layout/sidebar").SectionId)} />
+              </ErrorBoundary>
             </div>
           )}
 
           {/* News Feed */}
           {showNews && (
             <div className="mb-5">
-              <NewsFeed />
+  <ErrorBoundary fallback="News feed unavailable."><NewsFeed /></ErrorBoundary>
             </div>
           )}
 

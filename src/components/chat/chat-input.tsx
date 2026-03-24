@@ -33,6 +33,7 @@ export function ChatInput({ value, onChange, onSubmit, isLoading }: ChatInputPro
         />
         <button
           type="submit"
+          aria-label="Send message"
           disabled={!value.trim() || isLoading}
           className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-indigo-500 text-white transition-opacity disabled:opacity-30"
         >
@@ -43,7 +44,7 @@ export function ChatInput({ value, onChange, onSubmit, isLoading }: ChatInputPro
           )}
         </button>
       </div>
-      <p className="mt-1.5 text-center text-[9px] text-muted-foreground">
+      <p className="mt-1.5 text-center text-micro text-muted-foreground">
         Try: &quot;What sectors are growing fastest?&quot; or &quot;Validate my SaaS idea&quot;
       </p>
     </form>

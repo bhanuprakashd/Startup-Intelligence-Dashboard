@@ -25,13 +25,13 @@ export function StartupGrid() {
           {stories && stories.length > 0 && (
             <Badge
               variant="secondary"
-              className="bg-indigo-500/10 text-[10px] text-indigo-400"
+              className="bg-indigo-500/10 text-2xs text-indigo-400"
             >
               Top {stories.length}
             </Badge>
           )}
         </div>
-        <span className="text-[10px] text-muted-foreground">
+        <span className="text-2xs text-muted-foreground">
           Ranked by HN score
         </span>
       </div>
@@ -77,7 +77,7 @@ export function StartupGrid() {
                       <h4 className="line-clamp-2 text-[11px] font-semibold leading-snug">
                         {story.title}
                       </h4>
-                      <p className="mt-0.5 text-[10px] text-muted-foreground">
+                      <p className="mt-0.5 text-2xs text-muted-foreground">
                         by {story.author}
                       </p>
                     </div>
@@ -96,7 +96,7 @@ export function StartupGrid() {
                 {/* Source tag */}
                 <div className="flex items-center gap-1.5">
                   <span
-                    className="rounded-full px-2 py-0.5 text-[9px] font-medium"
+                    className="rounded-full px-2 py-0.5 text-micro font-medium"
                     style={{ backgroundColor: `${color}15`, color }}
                   >
                     {story.source}
@@ -106,14 +106,14 @@ export function StartupGrid() {
                 {/* Metrics row */}
                 <div className="mt-auto grid grid-cols-2 gap-2 border-t border-white/5 pt-3">
                   <div>
-                    <p className="text-[9px] text-muted-foreground">Score</p>
+                    <p className="text-micro text-muted-foreground">Score</p>
                     <p className="flex items-center gap-0.5 text-[11px] font-semibold text-emerald-400">
                       <ThumbsUp className="h-2.5 w-2.5" />
                       {story.score}
                     </p>
                   </div>
                   <div>
-                    <p className="text-[9px] text-muted-foreground">Comments</p>
+                    <p className="text-micro text-muted-foreground">Comments</p>
                     <p className="flex items-center gap-0.5 text-[11px] font-semibold">
                       <MessageSquare className="h-2.5 w-2.5 text-muted-foreground" />
                       {story.comments}

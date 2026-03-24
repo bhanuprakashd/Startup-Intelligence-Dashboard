@@ -88,7 +88,7 @@ function ProgressBar({ step }: { step: number }) {
           <div key={label} className="flex items-center gap-1">
             <div
               className={cn(
-                "flex h-6 w-6 items-center justify-center rounded-full text-[10px] font-bold transition-colors",
+                "flex h-6 w-6 items-center justify-center rounded-full text-2xs font-bold transition-colors",
                 index < step
                   ? "bg-indigo-500 text-white"
                   : index === step
@@ -100,7 +100,7 @@ function ProgressBar({ step }: { step: number }) {
             </div>
             <span
               className={cn(
-                "hidden sm:block text-[10px] font-medium transition-colors",
+                "hidden sm:block text-2xs font-medium transition-colors",
                 index <= step ? "text-indigo-400" : "text-muted-foreground"
               )}
             >
@@ -257,7 +257,7 @@ export function FounderQuiz() {
       const json = await res.json();
       setResult(json.data);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Something went wrong");
+      setError(err instanceof Error ? err.message : "Founder matching unavailable. Check your API key or try again.");
     } finally {
       setIsLoading(false);
     }
@@ -304,7 +304,7 @@ export function FounderQuiz() {
           </div>
           <div>
             <h2 className="text-sm font-bold">Founder Profile Match</h2>
-            <p className="text-[10px] text-muted-foreground">
+            <p className="text-2xs text-muted-foreground">
               Answer 3 quick questions — AI matches you with your best startup opportunities
             </p>
           </div>
@@ -317,7 +317,7 @@ export function FounderQuiz() {
           <div className="space-y-4">
             <div>
               <h3 className="text-sm font-semibold mb-1">What are your skills?</h3>
-              <p className="text-[10px] text-muted-foreground mb-3">
+              <p className="text-2xs text-muted-foreground mb-3">
                 Select all that apply — this helps us match ideas you can actually execute.
               </p>
               <TagGrid options={SKILLS} selected={skills} onToggle={toggleSkill} />
@@ -339,7 +339,7 @@ export function FounderQuiz() {
           <div className="space-y-4">
             <div>
               <h3 className="text-sm font-semibold mb-1">What sectors excite you?</h3>
-              <p className="text-[10px] text-muted-foreground mb-3">
+              <p className="text-2xs text-muted-foreground mb-3">
                 Pick the areas you&apos;d be passionate about building in.
               </p>
               <TagGrid
@@ -373,13 +373,13 @@ export function FounderQuiz() {
           <div className="space-y-4">
             <div>
               <h3 className="text-sm font-semibold mb-1">Your resources &amp; background</h3>
-              <p className="text-[10px] text-muted-foreground mb-3">
+              <p className="text-2xs text-muted-foreground mb-3">
                 Helps us recommend realistic opportunities given your constraints.
               </p>
               <div className="space-y-3">
                 {/* Budget */}
                 <div>
-                  <label className="mb-1 block text-[10px] font-medium text-muted-foreground uppercase tracking-wide">
+                  <label className="mb-1 block text-2xs font-medium text-muted-foreground uppercase tracking-wide">
                     Available Budget
                   </label>
                   <select
@@ -397,7 +397,7 @@ export function FounderQuiz() {
 
                 {/* Location */}
                 <div>
-                  <label className="mb-1 block text-[10px] font-medium text-muted-foreground uppercase tracking-wide">
+                  <label className="mb-1 block text-2xs font-medium text-muted-foreground uppercase tracking-wide">
                     Your Location
                   </label>
                   <input
@@ -411,7 +411,7 @@ export function FounderQuiz() {
 
                 {/* Experience */}
                 <div>
-                  <label className="mb-1 block text-[10px] font-medium text-muted-foreground uppercase tracking-wide">
+                  <label className="mb-1 block text-2xs font-medium text-muted-foreground uppercase tracking-wide">
                     Founder Experience
                   </label>
                   <select
@@ -459,7 +459,7 @@ export function FounderQuiz() {
                 <p className="text-sm text-muted-foreground">
                   Analyzing your profile &amp; live market signals…
                 </p>
-                <p className="text-[10px] text-muted-foreground/60">
+                <p className="text-2xs text-muted-foreground/60">
                   This can take up to 30 seconds
                 </p>
               </div>
@@ -470,11 +470,11 @@ export function FounderQuiz() {
                 <AlertTriangle className="h-4 w-4 text-red-400 shrink-0 mt-0.5" />
                 <div>
                   <p className="text-xs font-medium text-red-400">Match failed</p>
-                  <p className="text-[10px] text-muted-foreground mt-0.5">{error}</p>
+                  <p className="text-2xs text-muted-foreground mt-0.5">{error}</p>
                   <button
                     type="button"
                     onClick={() => setStep(2)}
-                    className="mt-2 text-[10px] text-indigo-400 hover:text-indigo-300 underline"
+                    className="mt-2 text-2xs text-indigo-400 hover:text-indigo-300 underline"
                   >
                     Go back and try again
                   </button>
@@ -489,7 +489,7 @@ export function FounderQuiz() {
                   <button
                     type="button"
                     onClick={handleReset}
-                    className="text-[10px] text-indigo-400 hover:text-indigo-300 underline"
+                    className="text-2xs text-indigo-400 hover:text-indigo-300 underline"
                   >
                     Start over
                   </button>
@@ -504,7 +504,7 @@ export function FounderQuiz() {
                   ].map((tag) => (
                     <span
                       key={tag}
-                      className="px-2 py-0.5 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-[10px] text-indigo-400"
+                      className="px-2 py-0.5 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-2xs text-indigo-400"
                     >
                       {tag}
                     </span>

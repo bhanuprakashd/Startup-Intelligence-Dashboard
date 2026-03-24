@@ -42,7 +42,7 @@ const CAT_COLORS: Record<string, string> = {
 };
 
 export function NewsFeed() {
-  const { data: stories, isLoading, error } = useQuery<HNItem[]>({
+  const { data: stories, isLoading, error, refetch } = useQuery<HNItem[]>({
     queryKey: ["live-hn"],
     queryFn: async () => {
       const res = await fetch("/api/feeds/hackernews");
@@ -63,10 +63,10 @@ export function NewsFeed() {
           <h3 className="text-sm font-semibold">Live Intelligence Feed</h3>
           <span className="flex items-center gap-1 rounded-full bg-blue-500/10 px-2 py-0.5">
             <span className="h-1.5 w-1.5 rounded-full bg-blue-400 animate-pulse" />
-            <span className="text-[9px] font-medium text-blue-400">LIVE</span>
+            <span className="text-micro font-medium text-blue-400">LIVE</span>
           </span>
         </div>
-        <span className="text-[10px] text-muted-foreground">
+        <span className="text-2xs text-muted-foreground">
           Source: Hacker News (auto-refresh)
         </span>
       </div>
@@ -78,8 +78,9 @@ export function NewsFeed() {
           <span className="ml-2 text-[11px] text-muted-foreground">Fetching live stories...</span>
         </div>
       ) : error || !stories?.length ? (
-        <div className="px-4 py-8 text-center text-[11px] text-muted-foreground">
-          Unable to fetch live data. Will retry automatically.
+        <div className="flex flex-col items-center gap-2 px-4 py-8 text-center">
+          <p className="text-[11px] text-muted-foreground">Unable to fetch live data. Will retry automatically.</p>
+          <button onClick={() => refetch()} className="rounded-lg bg-white/5 px-3 py-1.5 text-[11px] text-muted-foreground hover:bg-white/10 hover:text-foreground transition-colors">Retry now</button>
         </div>
       ) : (
         <div className="grid gap-px bg-white/[0.02] sm:grid-cols-2 lg:grid-cols-3">
@@ -96,13 +97,13 @@ export function NewsFeed() {
                 {/* Top row */}
                 <div className="flex items-center justify-between">
                   <span
-                    className={`rounded-full px-2 py-0.5 text-[9px] font-medium ${CAT_COLORS[category] ?? CAT_COLORS.Tech}`}
+                    className={`rounded-full px-2 py-0.5 text-micro font-medium ${CAT_COLORS[category] ?? CAT_COLORS.Tech}`}
                   >
                     {category}
                   </span>
                   <div className="flex items-center gap-1.5">
                     <TrendingUp className="h-3 w-3 text-emerald-400" />
-                    <span className="text-[9px] font-semibold text-emerald-400">
+                    <span className="text-micro font-semibold text-emerald-400">
                       {story.score} pts
                     </span>
                   </div>
@@ -115,7 +116,7 @@ export function NewsFeed() {
 
                 {/* Footer */}
                 <div className="mt-auto flex items-center justify-between">
-                  <div className="flex items-center gap-2 text-[10px] text-muted-foreground">
+                  <div className="flex items-center gap-2 text-2xs text-muted-foreground">
                     <span className="font-medium text-foreground/60">
                       {story.source}
                     </span>

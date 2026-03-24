@@ -80,7 +80,7 @@ export function Header({
           </div>
           <div className="flex flex-col">
             <span className="text-sm font-bold tracking-tight">WSI</span>
-            <span className="hidden text-[9px] uppercase tracking-[0.2em] text-muted-foreground lg:inline">
+            <span className="hidden text-micro uppercase tracking-[0.2em] text-muted-foreground lg:inline">
               World Startup Intelligence
             </span>
           </div>
@@ -89,7 +89,7 @@ export function Header({
         {/* Connection status */}
         <div className="ml-2 hidden items-center gap-1.5 rounded-full bg-emerald-500/10 px-2.5 py-1 md:flex">
           <Wifi className="h-3 w-3 text-emerald-400" />
-          <span className="text-[10px] font-medium text-emerald-400">LIVE</span>
+          <span className="text-2xs font-medium text-emerald-400">LIVE</span>
         </div>
 
         {/* Search */}
@@ -99,7 +99,7 @@ export function Header({
         >
           <Search className="h-3.5 w-3.5" />
           <span>Search startups, markets...</span>
-          <kbd className="ml-auto hidden rounded border border-white/10 bg-white/5 px-1.5 py-0.5 text-[9px] font-mono text-muted-foreground sm:inline">
+          <kbd className="ml-auto hidden rounded border border-white/10 bg-white/5 px-1.5 py-0.5 text-micro font-mono text-muted-foreground sm:inline">
             /K
           </kbd>
         </button>
@@ -109,6 +109,7 @@ export function Header({
           {/* Copilot toggle */}
           <button
             onClick={onCopilotToggle}
+            aria-label="Toggle AI Copilot"
             className={`flex h-8 items-center gap-1.5 rounded-lg border px-3 text-[11px] font-medium transition-all ${
               isCopilotOpen
                 ? "border-indigo-500/30 bg-indigo-500/10 text-indigo-400"
@@ -130,6 +131,7 @@ export function Header({
           <Button
             variant="ghost"
             size="icon"
+            aria-label="Refresh data"
             onClick={onRefresh}
             disabled={isRefreshing}
             className="h-8 w-8 text-muted-foreground hover:text-foreground"
@@ -145,6 +147,7 @@ export function Header({
               size="icon"
               onClick={toggleTheme}
               className="h-8 w-8 text-muted-foreground hover:text-foreground"
+              aria-label="Toggle theme"
             >
               {theme === "dark" ? (
                 <Sun className="h-3.5 w-3.5" />
@@ -174,11 +177,11 @@ export function Header({
               <span className="text-[11px] font-semibold text-indigo-400">
                 {formatCurrency(item.amount)}
               </span>
-              <span className="rounded bg-white/5 px-1 py-0.5 text-[9px] text-muted-foreground">
+              <span className="rounded bg-white/5 px-1 py-0.5 text-micro text-muted-foreground">
                 {item.stage}
               </span>
               <span
-                className={`text-[10px] font-medium ${
+                className={`text-2xs font-medium ${
                   item.delta >= 0 ? "text-emerald-400" : "text-red-400"
                 }`}
               >

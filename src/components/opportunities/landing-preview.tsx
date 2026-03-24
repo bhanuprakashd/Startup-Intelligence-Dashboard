@@ -161,7 +161,7 @@ function LandingPreviewContent({ data }: { data: LandingPageData }) {
           </div>
           {/* URL bar */}
           <div className="flex flex-1 items-center gap-2 rounded-md border border-white/10 bg-white/[0.04] px-3 py-1">
-            <span className="text-[10px] text-green-400">&#9679;</span>
+            <span className="text-2xs text-green-400">&#9679;</span>
             <span className="text-[11px] text-muted-foreground">
               {data.companyName.toLowerCase().replace(/\s+/g, "")}.com
             </span>
@@ -170,8 +170,8 @@ function LandingPreviewContent({ data }: { data: LandingPageData }) {
 
         {/* Page content — scrollable */}
         <div
-          className="overflow-y-auto"
-          style={{ maxHeight: "600px", background: "#0a0a0f" }}
+          className="overflow-y-auto max-h-[600px]"
+          style={{ background: "#0a0a0f" }}
         >
           {/* Hero */}
           <div
@@ -549,7 +549,7 @@ export function LandingPreview() {
       const json = await res.json();
       setResult(json.data);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Something went wrong");
+      setError(err instanceof Error ? err.message : "Landing page generation failed. Check your API key or try again.");
     } finally {
       setIsLoading(false);
     }
@@ -565,7 +565,7 @@ export function LandingPreview() {
           </div>
           <div>
             <h2 className="text-sm font-bold">Landing Page Generator</h2>
-            <p className="text-[10px] text-muted-foreground">
+            <p className="text-2xs text-muted-foreground">
               Describe your startup idea — get a fully designed landing page
               preview in seconds
             </p>

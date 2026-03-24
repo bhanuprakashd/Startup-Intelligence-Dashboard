@@ -56,7 +56,7 @@ export function Sidebar({
   return (
     <aside className="hidden w-52 shrink-0 flex-col border-r border-white/5 bg-[#0d0d14] lg:flex">
       <nav className="flex flex-1 flex-col gap-0.5 p-2 pt-3">
-        <p className="mb-1.5 px-3 text-[9px] font-semibold uppercase tracking-[0.15em] text-muted-foreground">
+        <p className="mb-1.5 px-3 text-micro font-semibold uppercase tracking-[0.15em] text-muted-foreground">
           Dashboard
         </p>
         {NAV_ITEMS.map((item) => {
@@ -78,7 +78,7 @@ export function Sidebar({
               {item.badge && (
                 <span
                   className={cn(
-                    "ml-auto rounded-full px-1.5 py-0.5 text-[8px] font-semibold",
+                    "ml-auto rounded-full px-1.5 py-0.5 text-3xs font-semibold",
                     item.badge === "AI"
                       ? "bg-violet-500/10 text-violet-400"
                       : "bg-white/5 text-muted-foreground"
@@ -94,16 +94,16 @@ export function Sidebar({
 
       {/* Live stats */}
       <div className="border-t border-white/5 p-3">
-        <p className="mb-2 px-1 text-[9px] font-semibold uppercase tracking-[0.15em] text-muted-foreground">
+        <p className="mb-2 px-1 text-micro font-semibold uppercase tracking-[0.15em] text-muted-foreground">
           Live Stats
         </p>
         <div className="space-y-2">
           {LIVE_STATS.map((stat) => (
             <div key={stat.label} className="flex items-center justify-between px-1">
-              <span className="text-[10px] text-muted-foreground">
+              <span className="text-2xs text-muted-foreground">
                 {stat.label}
               </span>
-              <span className="text-[10px] font-semibold">{stat.value}</span>
+              <span className="text-2xs font-semibold">{stat.value}</span>
             </div>
           ))}
         </div>

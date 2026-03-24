@@ -141,7 +141,7 @@ export function MetricCard({
             <div className="mt-1.5 flex items-center gap-1.5">
               <div
                 className={cn(
-                  "flex items-center gap-0.5 rounded-full px-1.5 py-0.5 text-[10px] font-semibold",
+                  "flex items-center gap-0.5 rounded-full px-1.5 py-0.5 text-2xs font-semibold",
                   change >= 0
                     ? "bg-emerald-500/10 text-emerald-400"
                     : "bg-red-500/10 text-red-400"
@@ -154,7 +154,7 @@ export function MetricCard({
                 )}
                 {Math.abs(change).toFixed(1)}%
               </div>
-              <span className="text-[10px] text-muted-foreground">
+              <span className="text-2xs text-muted-foreground">
                 {changeLabel}
               </span>
             </div>

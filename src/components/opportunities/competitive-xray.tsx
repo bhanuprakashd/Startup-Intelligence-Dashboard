@@ -45,7 +45,7 @@ function CompetitorCard({ competitor }: { competitor: Competitor }) {
     <div className="flex items-start gap-3 rounded-lg bg-white/[0.02] p-3">
       <span
         className={cn(
-          "shrink-0 rounded-full px-2 py-0.5 text-[8px] font-semibold uppercase",
+          "shrink-0 rounded-full px-2 py-0.5 text-3xs font-semibold uppercase",
           colorClass
         )}
       >
@@ -63,7 +63,7 @@ function CompetitorCard({ competitor }: { competitor: Competitor }) {
             href={competitor.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-1 inline-flex items-center gap-1 text-[9px] text-indigo-400 hover:underline"
+            className="mt-1 inline-flex items-center gap-1 text-micro text-indigo-400 hover:underline"
           >
             <ExternalLink className="h-2.5 w-2.5" />
             View source
@@ -105,7 +105,7 @@ export function CompetitiveXRay() {
       const json = await res.json();
       setResult(json.data);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Something went wrong");
+      setError(err instanceof Error ? err.message : "X-Ray scan failed. Check your API key or try again.");
     } finally {
       setIsLoading(false);
     }
@@ -121,7 +121,7 @@ export function CompetitiveXRay() {
           </div>
           <div>
             <h2 className="text-sm font-bold">Competitive X-Ray</h2>
-            <p className="text-[10px] text-muted-foreground">
+            <p className="text-2xs text-muted-foreground">
               Enter your idea or sector — we&apos;ll scan Reddit, GitHub,
               ProductHunt &amp; HackerNews for competitors
             </p>
@@ -187,11 +187,11 @@ export function CompetitiveXRay() {
               <div className="flex items-center gap-2">
                 <Eye className="h-4 w-4 text-cyan-400" />
                 <h3 className="text-sm font-semibold">Competitors Found</h3>
-                <span className="rounded-full bg-cyan-500/10 px-2 py-0.5 text-[9px] font-medium text-cyan-400">
+                <span className="rounded-full bg-cyan-500/10 px-2 py-0.5 text-micro font-medium text-cyan-400">
                   {result.competitors.length} found
                 </span>
               </div>
-              <span className="text-[10px] text-muted-foreground">
+              <span className="text-2xs text-muted-foreground">
                 {result.sourcesSucceeded}/{result.sourcesQueried} sources
               </span>
             </div>
@@ -213,7 +213,7 @@ export function CompetitiveXRay() {
             <div className="flex items-center gap-2 mb-3">
               <Rocket className="h-4 w-4 text-violet-400" />
               <h3 className="text-sm font-semibold">AI Analysis</h3>
-              <span className="rounded-full bg-violet-500/10 px-2 py-0.5 text-[9px] font-medium text-violet-400">
+              <span className="rounded-full bg-violet-500/10 px-2 py-0.5 text-micro font-medium text-violet-400">
                 Powered by AI
               </span>
             </div>

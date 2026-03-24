@@ -122,7 +122,7 @@ const FOUNDER_TIPS = [
   { icon: Users, tip: "Talk to 50 potential customers before writing a single line of code" },
 ];
 
-export function OpportunityFinder() {
+export function OpportunityFinder({ onNavigate }: { readonly onNavigate?: (section: string) => void } = {}) {
   const [selectedGap, setSelectedGap] = useState<string | null>(null);
 
   return (
@@ -147,7 +147,7 @@ export function OpportunityFinder() {
             </div>
             <div>
               <h2 className="text-sm font-bold">AI Opportunity Finder</h2>
-              <p className="text-[10px] text-muted-foreground">
+              <p className="text-2xs text-muted-foreground">
                 Market gaps identified from funding patterns, search trends, and competitive analysis
               </p>
             </div>
@@ -156,7 +156,7 @@ export function OpportunityFinder() {
             {FOUNDER_TIPS.map((t, i) => (
               <div key={i} className="flex items-start gap-2 rounded-lg bg-white/[0.03] p-2.5">
                 <t.icon className="mt-0.5 h-3.5 w-3.5 shrink-0 text-indigo-400" />
-                <p className="text-[10px] leading-relaxed text-muted-foreground">{t.tip}</p>
+                <p className="text-2xs leading-relaxed text-muted-foreground">{t.tip}</p>
               </div>
             ))}
           </div>
@@ -171,11 +171,11 @@ export function OpportunityFinder() {
             <div className="flex items-center gap-2">
               <Lightbulb className="h-4 w-4 text-amber-400" />
               <h3 className="text-sm font-semibold">Underserved Market Gaps</h3>
-              <span className="rounded-full bg-amber-400/10 px-2 py-0.5 text-[9px] font-medium text-amber-400">
+              <span className="rounded-full bg-amber-400/10 px-2 py-0.5 text-micro font-medium text-amber-400">
                 {MARKET_GAPS.length} opportunities
               </span>
             </div>
-            <span className="text-[10px] text-muted-foreground">
+            <span className="text-2xs text-muted-foreground">
               Updated daily via AI analysis
             </span>
           </div>
@@ -194,7 +194,7 @@ export function OpportunityFinder() {
                   <div className="flex-1">
                     <div className="flex items-center gap-2">
                       <h4 className="text-[13px] font-semibold">{gap.title}</h4>
-                      <span className="rounded-full bg-violet-500/10 px-2 py-0.5 text-[9px] font-medium text-violet-400">
+                      <span className="rounded-full bg-violet-500/10 px-2 py-0.5 text-micro font-medium text-violet-400">
                         {gap.sector}
                       </span>
                     </div>
@@ -218,16 +218,16 @@ export function OpportunityFinder() {
                           strokeLinecap="round"
                         />
                       </svg>
-                      <span className="absolute inset-0 flex items-center justify-center text-[9px] font-bold">
+                      <span className="absolute inset-0 flex items-center justify-center text-micro font-bold">
                         {gap.demand}
                       </span>
                     </div>
-                    <p className="mt-0.5 text-[8px] text-muted-foreground">Demand</p>
+                    <p className="mt-0.5 text-3xs text-muted-foreground">Demand</p>
                   </div>
                 </div>
 
                 {/* Meta row */}
-                <div className="mt-2.5 flex flex-wrap items-center gap-3 text-[10px]">
+                <div className="mt-2.5 flex flex-wrap items-center gap-3 text-2xs">
                   <span className="flex items-center gap-1 text-muted-foreground">
                     <DollarSign className="h-3 w-3" />
                     {gap.marketSize}
@@ -249,12 +249,12 @@ export function OpportunityFinder() {
                 {/* Expanded details */}
                 {selectedGap === gap.id && (
                   <div className="mt-3 space-y-2 rounded-lg bg-white/[0.02] p-3 animate-fade-in-up">
-                    <p className="text-[10px] font-medium text-indigo-400">
+                    <p className="text-2xs font-medium text-indigo-400">
                       Market Signals
                     </p>
                     <ul className="space-y-1">
                       {gap.signals.map((signal, i) => (
-                        <li key={i} className="flex items-start gap-1.5 text-[10px] text-muted-foreground">
+                        <li key={i} className="flex items-start gap-1.5 text-2xs text-muted-foreground">
                           <Sparkles className="mt-0.5 h-3 w-3 shrink-0 text-amber-400" />
                           {signal}
                         </li>
@@ -262,13 +262,13 @@ export function OpportunityFinder() {
                     </ul>
                     <div className="flex flex-wrap items-center gap-1.5 pt-1">
                       {gap.tags.map((tag) => (
-                        <span key={tag} className="rounded bg-white/5 px-2 py-0.5 text-[9px] text-muted-foreground">
+                        <span key={tag} className="rounded bg-white/5 px-2 py-0.5 text-micro text-muted-foreground">
                           {tag}
                         </span>
                       ))}
                       <a
                         href="#validate"
-                        className="ml-auto flex items-center gap-1 rounded-full bg-indigo-500/15 px-2.5 py-1 text-[9px] font-medium text-indigo-400 hover:bg-indigo-500/25 transition-colors"
+                        className="ml-auto flex items-center gap-1 rounded-full bg-indigo-500/15 px-2.5 py-1 text-micro font-medium text-indigo-400 hover:bg-indigo-500/25 transition-colors"
                         onClick={(e) => e.stopPropagation()}
                       >
                         <Target className="h-2.5 w-2.5" />
@@ -289,18 +289,18 @@ export function OpportunityFinder() {
               <Flame className="h-4 w-4 text-orange-400" />
               <h3 className="text-sm font-semibold">Hottest Sectors</h3>
             </div>
-            <span className="text-[9px] text-muted-foreground">Q1 2026 data</span>
+            <span className="text-micro text-muted-foreground">Q1 2026 data</span>
           </div>
 
           <div className="divide-y divide-white/[0.03]">
             {TRENDING_SECTORS.map((sector, i) => (
               <div key={sector.name} className="flex items-center gap-3 px-4 py-3 hover:bg-white/[0.02]">
-                <span className="flex h-6 w-6 items-center justify-center rounded-full bg-white/5 text-[10px] font-bold text-muted-foreground">
+                <span className="flex h-6 w-6 items-center justify-center rounded-full bg-white/5 text-2xs font-bold text-muted-foreground">
                   {i + 1}
                 </span>
                 <div className="flex-1 min-w-0">
                   <p className="truncate text-[11px] font-medium">{sector.name}</p>
-                  <p className="text-[9px] text-muted-foreground">
+                  <p className="text-micro text-muted-foreground">
                     {sector.deals} deals this quarter
                   </p>
                 </div>
@@ -326,8 +326,8 @@ export function OpportunityFinder() {
           {/* Bottom insight */}
           <div className="border-t border-white/5 p-4">
             <div className="rounded-lg bg-gradient-to-r from-violet-500/5 to-indigo-500/5 p-3">
-              <p className="text-[10px] font-medium text-indigo-400">AI Insight</p>
-              <p className="mt-1 text-[10px] leading-relaxed text-muted-foreground">
+              <p className="text-2xs font-medium text-indigo-400">AI Insight</p>
+              <p className="mt-1 text-2xs leading-relaxed text-muted-foreground">
                 Vertical AI Agents are the fastest-growing sector with 420% deal growth.
                 The sweet spot: industry-specific agents for healthcare, legal, and finance
                 where domain expertise creates strong moats.

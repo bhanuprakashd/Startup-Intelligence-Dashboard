@@ -145,7 +145,7 @@ export function LaunchRoadmap() {
       const json = await res.json();
       setResult(json.data);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Something went wrong");
+      setError(err instanceof Error ? err.message : "Roadmap generation failed. Check your API key or try again.");
     } finally {
       setIsLoading(false);
     }
@@ -163,7 +163,7 @@ export function LaunchRoadmap() {
           </div>
           <div>
             <h2 className="text-sm font-bold">90-Day Launch Roadmap</h2>
-            <p className="text-[10px] text-muted-foreground">
+            <p className="text-2xs text-muted-foreground">
               Input your idea, skills &amp; budget — AI builds a week-by-week action plan to launch
             </p>
           </div>
@@ -249,7 +249,7 @@ export function LaunchRoadmap() {
               <div className="flex items-center gap-2 mb-3">
                 <Map className="h-4 w-4 text-emerald-400" />
                 <h3 className="text-sm font-semibold">Your 90-Day Roadmap</h3>
-                <span className="rounded-full bg-emerald-500/10 px-2 py-0.5 text-[9px] font-medium text-emerald-400">
+                <span className="rounded-full bg-emerald-500/10 px-2 py-0.5 text-micro font-medium text-emerald-400">
                   AI Generated
                 </span>
               </div>
@@ -273,7 +273,7 @@ export function LaunchRoadmap() {
                   </div>
                   <div>
                     <h3 className={`text-[13px] font-bold ${cfg.color}`}>{cfg.label}</h3>
-                    <p className="text-[10px] text-muted-foreground">{cfg.weeks}</p>
+                    <p className="text-2xs text-muted-foreground">{cfg.weeks}</p>
                   </div>
                   {/* Timeline dot connector */}
                   <div className="ml-auto flex items-center gap-1">

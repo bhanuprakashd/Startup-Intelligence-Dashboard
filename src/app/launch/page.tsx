@@ -330,7 +330,7 @@ export default function LaunchPage() {
                         <div className={`font-semibold ${c.highlight ? "text-indigo-300" : "text-zinc-300"}`}>
                           {c.name}
                           {c.highlight && (
-                            <span className="ml-2 text-[10px] bg-indigo-500/20 text-indigo-400 px-1.5 py-0.5 rounded-full font-medium">YOU</span>
+                            <span className="ml-2 text-2xs bg-indigo-500/20 text-indigo-400 px-1.5 py-0.5 rounded-full font-medium">YOU</span>
                           )}
                         </div>
                         <div className="text-zinc-600 text-xs">{c.type}</div>
@@ -429,7 +429,7 @@ export default function LaunchPage() {
                   <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${color} flex items-center justify-center shadow-lg shadow-black/30 mb-2`}>
                     <span className="text-white font-black text-xs text-center leading-tight px-1">{step}</span>
                   </div>
-                  <span className="text-zinc-500 text-[10px] text-center leading-tight max-w-[60px]">{label}</span>
+                  <span className="text-zinc-500 text-2xs text-center leading-tight max-w-[60px]">{label}</span>
                 </div>
                 {i < journey.length - 1 && (
                   <ArrowRight className="w-4 h-4 text-zinc-700 mx-1 mb-4 flex-shrink-0" />
@@ -500,7 +500,7 @@ export default function LaunchPage() {
             <div className="relative rounded-2xl p-[1px] bg-gradient-to-b from-indigo-500/50 to-violet-600/50 shadow-xl shadow-indigo-500/10">
               <div className="bg-[#0f0f1a] rounded-2xl p-6 flex flex-col h-full">
                 <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-                  <span className="bg-gradient-to-r from-indigo-500 to-violet-600 text-white text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full">
+                  <span className="bg-gradient-to-r from-indigo-500 to-violet-600 text-white text-2xs font-bold uppercase tracking-widest px-3 py-1 rounded-full">
                     Most Popular
                   </span>
                 </div>

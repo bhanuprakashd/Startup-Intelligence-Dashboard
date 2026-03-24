@@ -56,12 +56,12 @@ export function GlobalMap() {
           <h3 className="text-sm font-semibold">Global Startup Ecosystems</h3>
           <Badge
             variant="secondary"
-            className="bg-indigo-500/10 text-[10px] text-indigo-400"
+            className="bg-indigo-500/10 text-2xs text-indigo-400"
           >
             {ECOSYSTEMS.length} hubs tracked
           </Badge>
         </div>
-        <div className="flex items-center gap-3 text-[10px] text-muted-foreground">
+        <div className="flex items-center gap-3 text-2xs text-muted-foreground">
           <span className="flex items-center gap-1">
             <span className="h-1.5 w-1.5 rounded-full bg-indigo-400" /> 10K+
           </span>
@@ -180,29 +180,29 @@ export function GlobalMap() {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-xs font-semibold">{hovered.city}</p>
-                <p className="text-[10px] text-muted-foreground">
+                <p className="text-2xs text-muted-foreground">
                   {hovered.country} — Rank #{hovered.rank}
                 </p>
               </div>
-              <div className="flex h-6 w-6 items-center justify-center rounded-full bg-indigo-500/20 text-[10px] font-bold text-indigo-400">
+              <div className="flex h-6 w-6 items-center justify-center rounded-full bg-indigo-500/20 text-2xs font-bold text-indigo-400">
                 {hovered.rank}
               </div>
             </div>
             <div className="mt-2 grid grid-cols-3 gap-2">
               <div>
-                <p className="text-[9px] text-muted-foreground">Startups</p>
+                <p className="text-micro text-muted-foreground">Startups</p>
                 <p className="text-xs font-semibold">
                   {formatNumber(hovered.startups)}
                 </p>
               </div>
               <div>
-                <p className="text-[9px] text-muted-foreground">Funding</p>
+                <p className="text-micro text-muted-foreground">Funding</p>
                 <p className="text-xs font-semibold">
                   {formatCurrency(hovered.funding)}
                 </p>
               </div>
               <div>
-                <p className="text-[9px] text-muted-foreground">Growth</p>
+                <p className="text-micro text-muted-foreground">Growth</p>
                 <p className="text-xs font-semibold text-emerald-400">
                   +{hovered.growth}%
                 </p>
@@ -212,7 +212,7 @@ export function GlobalMap() {
               {hovered.topSectors.map((s) => (
                 <span
                   key={s}
-                  className="rounded bg-white/5 px-1.5 py-0.5 text-[9px] text-muted-foreground"
+                  className="rounded bg-white/5 px-1.5 py-0.5 text-micro text-muted-foreground"
                 >
                   {s}
                 </span>
@@ -232,18 +232,18 @@ export function GlobalMap() {
             key={eco.city}
             className="group flex items-center gap-2 px-3 py-2.5 transition-colors hover:bg-white/[0.03]"
           >
-            <div className="flex h-7 w-7 items-center justify-center rounded-full bg-indigo-500/10 text-[10px] font-bold text-indigo-400">
+            <div className="flex h-7 w-7 items-center justify-center rounded-full bg-indigo-500/10 text-2xs font-bold text-indigo-400">
               {eco.rank}
             </div>
             <div className="min-w-0 flex-1">
               <p className="truncate text-[11px] font-medium">{eco.city}</p>
               <div className="flex items-center gap-1">
                 <Users className="h-2.5 w-2.5 text-muted-foreground" />
-                <span className="text-[9px] text-muted-foreground">
+                <span className="text-micro text-muted-foreground">
                   {formatNumber(eco.startups)}
                 </span>
                 <TrendingUp className="ml-1 h-2.5 w-2.5 text-emerald-400" />
-                <span className="text-[9px] text-emerald-400">
+                <span className="text-micro text-emerald-400">
                   +{eco.growth}%
                 </span>
               </div>

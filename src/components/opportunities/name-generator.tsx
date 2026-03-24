@@ -38,12 +38,12 @@ function NameCard({ item }: { item: NameResult }) {
           {item.name}
         </h3>
         {item.available ? (
-          <span className="shrink-0 flex items-center gap-1 rounded-full bg-emerald-500/10 px-2 py-0.5 text-[9px] font-semibold uppercase text-emerald-400">
+          <span className="shrink-0 flex items-center gap-1 rounded-full bg-emerald-500/10 px-2 py-0.5 text-micro font-semibold uppercase text-emerald-400">
             <CheckCircle2 className="h-2.5 w-2.5" />
             Available
           </span>
         ) : (
-          <span className="shrink-0 flex items-center gap-1 rounded-full bg-red-500/10 px-2 py-0.5 text-[9px] font-semibold uppercase text-red-400">
+          <span className="shrink-0 flex items-center gap-1 rounded-full bg-red-500/10 px-2 py-0.5 text-micro font-semibold uppercase text-red-400">
             <XCircle className="h-2.5 w-2.5" />
             Taken
           </span>
@@ -100,7 +100,7 @@ export function NameGenerator() {
       const json = await res.json();
       setResult(json.data);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Something went wrong");
+      setError(err instanceof Error ? err.message : "Name generation failed. Check your API key or try again.");
     } finally {
       setIsLoading(false);
     }
@@ -118,7 +118,7 @@ export function NameGenerator() {
           </div>
           <div>
             <h2 className="text-sm font-bold">Startup Name Generator</h2>
-            <p className="text-[10px] text-muted-foreground">
+            <p className="text-2xs text-muted-foreground">
               Describe your idea — AI generates 10 names and checks .com availability live
             </p>
           </div>
@@ -184,11 +184,11 @@ export function NameGenerator() {
               <span className="text-sm font-semibold">
                 {result.names.length} names generated
               </span>
-              <span className="rounded-full bg-emerald-500/10 px-2 py-0.5 text-[9px] font-semibold text-emerald-400">
+              <span className="rounded-full bg-emerald-500/10 px-2 py-0.5 text-micro font-semibold text-emerald-400">
                 {availableCount} .com available
               </span>
             </div>
-            <span className="text-[10px] text-muted-foreground truncate max-w-[200px]">
+            <span className="text-2xs text-muted-foreground truncate max-w-[200px]">
               for &quot;{result.idea}&quot;
             </span>
           </div>

@@ -58,8 +58,10 @@ function ScoreRing({
   const radius = (size - 8) / 2;
   const circumference = 2 * Math.PI * radius;
   const offset = circumference - (score / 100) * circumference;
-  const color =
+  const strokeColor =
     score >= 70 ? "#34d399" : score >= 40 ? "#fbbf24" : "#ef4444";
+  const textClass =
+    score >= 70 ? "text-emerald-400" : score >= 40 ? "text-amber-400" : "text-red-400";
 
   return (
     <div className="flex flex-col items-center gap-1">
@@ -78,7 +80,7 @@ function ScoreRing({
             cy={size / 2}
             r={radius}
             fill="none"
-            stroke={color}
+            stroke={strokeColor}
             strokeWidth="4"
             strokeDasharray={circumference}
             strokeDashoffset={offset}
@@ -87,13 +89,12 @@ function ScoreRing({
           />
         </svg>
         <span
-          className="absolute inset-0 flex items-center justify-center text-lg font-bold"
-          style={{ color }}
+          className={`absolute inset-0 flex items-center justify-center text-lg font-bold ${textClass}`}
         >
           {score}
         </span>
       </div>
-      <span className="text-[9px] text-muted-foreground">{label}</span>
+      <span className="text-micro text-muted-foreground">{label}</span>
     </div>
   );
 }
@@ -110,7 +111,7 @@ function SignalCard({ signal }: { signal: Signal }) {
     <div className="flex items-start gap-2 rounded-lg bg-white/[0.02] p-3">
       <span
         className={cn(
-          "shrink-0 rounded-full px-2 py-0.5 text-[8px] font-semibold uppercase",
+          "shrink-0 rounded-full px-2 py-0.5 text-3xs font-semibold uppercase",
           catColors[signal.category] ?? "text-muted-foreground bg-white/5"
         )}
       >
@@ -121,7 +122,7 @@ function SignalCard({ signal }: { signal: Signal }) {
           {signal.description}
         </p>
         <div className="mt-1 flex items-center gap-2">
-          <span className="text-[9px] text-muted-foreground">
+          <span className="text-micro text-muted-foreground">
             via {signal.source}
           </span>
           <div className="h-1.5 w-12 overflow-hidden rounded-full bg-white/5">
@@ -135,7 +136,7 @@ function SignalCard({ signal }: { signal: Signal }) {
               href={signal.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-[9px] text-indigo-400 hover:underline"
+              className="text-micro text-indigo-400 hover:underline"
             >
               <ExternalLink className="inline h-2.5 w-2.5" /> source
             </a>
@@ -177,7 +178,7 @@ export function IdeaValidator() {
       const json = await res.json();
       setResult(json.data);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Something went wrong");
+      setError(err instanceof Error ? err.message : "Validation service unavailable. Check your API key or try again.");
     } finally {
       setIsLoading(false);
     }
@@ -193,7 +194,7 @@ export function IdeaValidator() {
           </div>
           <div>
             <h2 className="text-sm font-bold">Idea Validator</h2>
-            <p className="text-[10px] text-muted-foreground">
+            <p className="text-2xs text-muted-foreground">
               Describe your startup idea — we&apos;ll scan Reddit, GitHub,
               HackerNews &amp; ProductHunt in real-time
             </p>
@@ -261,7 +262,7 @@ export function IdeaValidator() {
                 <h3 className="text-sm font-semibold">Viability Report</h3>
                 <span
                   className={cn(
-                    "rounded-full px-2 py-0.5 text-[9px] font-semibold",
+                    "rounded-full px-2 py-0.5 text-micro font-semibold",
                     result.confidence === "high"
                       ? "bg-emerald-400/10 text-emerald-400"
                       : result.confidence === "medium"
@@ -272,7 +273,7 @@ export function IdeaValidator() {
                   {result.confidence.toUpperCase()} CONFIDENCE
                 </span>
               </div>
-              <span className="text-[10px] text-muted-foreground">
+              <span className="text-2xs text-muted-foreground">
                 {result.sourcesSucceeded}/{result.sourcesQueried} sources |{" "}
                 {result.signalCount} signals
               </span>
@@ -293,7 +294,7 @@ export function IdeaValidator() {
             <div className="flex items-center gap-2 mb-3">
               <Rocket className="h-4 w-4 text-violet-400" />
               <h3 className="text-sm font-semibold">AI Analysis</h3>
-              <span className="rounded-full bg-violet-500/10 px-2 py-0.5 text-[9px] font-medium text-violet-400">
+              <span className="rounded-full bg-violet-500/10 px-2 py-0.5 text-micro font-medium text-violet-400">
                 Powered by AI
               </span>
             </div>
@@ -309,7 +310,7 @@ export function IdeaValidator() {
             <div className="flex items-center gap-2 mb-3">
               <Shield className="h-4 w-4 text-cyan-400" />
               <h3 className="text-sm font-semibold">Evidence Chain</h3>
-              <span className="text-[10px] text-muted-foreground">
+              <span className="text-2xs text-muted-foreground">
                 {result.signals.length} live signals from{" "}
                 {result.categoriesCovered} categories
               </span>

@@ -25,7 +25,7 @@ export function StatusBar({
 
   return (
     <footer className="border-t border-white/5 bg-[#0a0a0f] px-4 py-1.5">
-      <div className="flex items-center justify-between text-[10px] text-muted-foreground">
+      <div className="flex items-center justify-between text-2xs text-muted-foreground">
         <div className="flex items-center gap-4">
           <span className="flex items-center gap-1.5">
             <Activity className="h-3 w-3 text-emerald-400" />
@@ -39,7 +39,7 @@ export function StatusBar({
             {DATA_SOURCES.map((source) => (
               <span key={source.id} className="flex items-center gap-1">
                 <Circle className="h-1.5 w-1.5 fill-emerald-400 text-emerald-400" />
-                <span className="text-[9px]">{source.name}</span>
+                <span className="text-micro">{source.name}</span>
               </span>
             ))}
           </div>

@@ -72,7 +72,7 @@ export function InvestorMatch() {
       const json = await res.json();
       setResult(json.data);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Something went wrong");
+      setError(err instanceof Error ? err.message : "Investor matching unavailable. Check your API key or try again.");
     } finally {
       setIsLoading(false);
     }
@@ -88,7 +88,7 @@ export function InvestorMatch() {
           </div>
           <div>
             <h2 className="text-sm font-bold">Investor Match</h2>
-            <p className="text-[10px] text-muted-foreground">
+            <p className="text-2xs text-muted-foreground">
               Describe your startup — we&apos;ll find the best-fit investors for
               your stage, sector, and location
             </p>
@@ -98,7 +98,7 @@ export function InvestorMatch() {
         <form onSubmit={handleMatch} className="space-y-3">
           {/* Idea field */}
           <div>
-            <label className="mb-1 block text-[10px] font-medium text-muted-foreground uppercase tracking-wide">
+            <label className="mb-1 block text-2xs font-medium text-muted-foreground uppercase tracking-wide">
               Startup Idea
             </label>
             <input
@@ -113,7 +113,7 @@ export function InvestorMatch() {
           {/* Sector + Stage row */}
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="mb-1 block text-[10px] font-medium text-muted-foreground uppercase tracking-wide">
+              <label className="mb-1 block text-2xs font-medium text-muted-foreground uppercase tracking-wide">
                 Sector
               </label>
               <input
@@ -125,7 +125,7 @@ export function InvestorMatch() {
               />
             </div>
             <div>
-              <label className="mb-1 block text-[10px] font-medium text-muted-foreground uppercase tracking-wide">
+              <label className="mb-1 block text-2xs font-medium text-muted-foreground uppercase tracking-wide">
                 Stage
               </label>
               <select
@@ -149,7 +149,7 @@ export function InvestorMatch() {
           {/* Location + Button row */}
           <div className="flex gap-3">
             <div className="flex-1 relative">
-              <label className="mb-1 block text-[10px] font-medium text-muted-foreground uppercase tracking-wide">
+              <label className="mb-1 block text-2xs font-medium text-muted-foreground uppercase tracking-wide">
                 Location <span className="normal-case">(optional)</span>
               </label>
               <div className="relative">
@@ -215,21 +215,21 @@ export function InvestorMatch() {
                 <DollarSign className="h-4 w-4 text-emerald-400" />
                 <h3 className="text-sm font-semibold">Investor Match Results</h3>
               </div>
-              <span className="text-[10px] text-muted-foreground">
+              <span className="text-2xs text-muted-foreground">
                 {result.sourcesSucceeded}/{result.sourcesQueried} sources
               </span>
             </div>
 
             {/* Match metadata chips */}
             <div className="flex flex-wrap gap-2 mb-4">
-              <span className="rounded-full bg-emerald-500/10 px-2.5 py-1 text-[10px] font-medium text-emerald-400">
+              <span className="rounded-full bg-emerald-500/10 px-2.5 py-1 text-2xs font-medium text-emerald-400">
                 {STAGES.find((s) => s.value === result.stage)?.label ?? result.stage}
               </span>
-              <span className="rounded-full bg-teal-500/10 px-2.5 py-1 text-[10px] font-medium text-teal-400">
+              <span className="rounded-full bg-teal-500/10 px-2.5 py-1 text-2xs font-medium text-teal-400">
                 {result.sector}
               </span>
               {result.location && (
-                <span className="rounded-full bg-blue-500/10 px-2.5 py-1 text-[10px] font-medium text-blue-400">
+                <span className="rounded-full bg-blue-500/10 px-2.5 py-1 text-2xs font-medium text-blue-400">
                   {result.location}
                 </span>
               )}
@@ -241,7 +241,7 @@ export function InvestorMatch() {
             <div className="flex items-center gap-2 mb-3">
               <Rocket className="h-4 w-4 text-violet-400" />
               <h3 className="text-sm font-semibold">AI Analysis</h3>
-              <span className="rounded-full bg-violet-500/10 px-2 py-0.5 text-[9px] font-medium text-violet-400">
+              <span className="rounded-full bg-violet-500/10 px-2 py-0.5 text-micro font-medium text-violet-400">
                 Powered by AI
               </span>
             </div>

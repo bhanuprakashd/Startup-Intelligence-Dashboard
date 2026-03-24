@@ -64,7 +64,7 @@ export function MobileNav({
               )}
             >
               <Icon className="h-5 w-5" />
-              <span className="text-[9px] font-medium">{item.label}</span>
+              <span className="text-micro font-medium">{item.label}</span>
             </button>
           );
         })}
@@ -73,7 +73,7 @@ export function MobileNav({
           className="flex flex-1 flex-col items-center gap-0.5 py-2.5 text-muted-foreground"
         >
           <Menu className="h-5 w-5" />
-          <span className="text-[9px] font-medium">More</span>
+          <span className="text-micro font-medium">More</span>
         </button>
       </nav>
 
@@ -82,7 +82,7 @@ export function MobileNav({
         <div className="fixed inset-0 z-[60] bg-[#0a0a0f]/95 backdrop-blur-md lg:hidden">
           <div className="flex items-center justify-between border-b border-white/5 px-4 py-3">
             <span className="text-sm font-bold">All Tools</span>
-            <button onClick={() => setMenuOpen(false)}>
+            <button aria-label="Close menu" onClick={() => setMenuOpen(false)}>
               <X className="h-5 w-5 text-muted-foreground" />
             </button>
           </div>

@@ -129,7 +129,7 @@ export function ChatPanel({ isOpen, onToggle }: ChatPanelProps) {
     <aside
       className={cn(
         "flex h-full shrink-0 flex-col border-l border-white/5 bg-[#0d0d14] transition-all duration-300",
-        isOpen ? "w-[380px]" : "w-0 overflow-hidden"
+        isOpen ? "w-[380px] max-w-[calc(100vw-48px)]" : "w-0 overflow-hidden"
       )}
     >
       {/* Header */}
@@ -139,13 +139,13 @@ export function ChatPanel({ isOpen, onToggle }: ChatPanelProps) {
         </div>
         <div>
           <h3 className="text-[12px] font-semibold">WSI Copilot</h3>
-          <p className="text-[9px] text-muted-foreground">
+          <p className="text-micro text-muted-foreground">
             AI startup intelligence assistant
           </p>
         </div>
         <span className="ml-auto flex items-center gap-1 rounded-full bg-emerald-500/10 px-2 py-0.5">
           <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
-          <span className="text-[8px] font-medium text-emerald-400">LIVE</span>
+          <span className="text-3xs font-medium text-emerald-400">LIVE</span>
         </span>
       </div>
 
@@ -172,7 +172,7 @@ export function ChatPanel({ isOpen, onToggle }: ChatPanelProps) {
                 <button
                   key={q}
                   onClick={() => setInput(q)}
-                  className="w-full rounded-lg border border-white/5 bg-white/[0.02] px-3 py-2 text-left text-[10px] text-muted-foreground transition-colors hover:border-indigo-500/20 hover:text-foreground"
+                  className="w-full rounded-lg border border-white/5 bg-white/[0.02] px-3 py-2 text-left text-2xs text-muted-foreground transition-colors hover:border-indigo-500/20 hover:text-foreground"
                 >
                   {q}
                 </button>
