@@ -72,9 +72,13 @@ export async function POST(req: Request) {
     });
   }
 
-  const ideaKeyword = idea.toLowerCase().split(" ")[0];
+  // Match HN stories against any significant word in the idea (min 4 chars to skip stop words)
+  const ideaWords = idea.toLowerCase().split(/\s+/).filter((w) => w.length >= 4);
   const relevantHN = hn
-    .filter((s) => s.title.toLowerCase().includes(ideaKeyword))
+    .filter((s) => {
+      const lower = s.title.toLowerCase();
+      return ideaWords.length === 0 || ideaWords.some((word) => lower.includes(word));
+    })
     .slice(0, 4);
   for (const story of relevantHN) {
     competitors.push({
@@ -85,8 +89,9 @@ export async function POST(req: Request) {
     });
   }
 
+  // Lower threshold — reddit.ts already drops score <= 5, so keep a minimal bar here
   const relevantReddit = reddit
-    .filter((r) => r.score > 20 || r.comments > 10)
+    .filter((r) => r.score > 5 || r.comments > 3)
     .slice(0, 4);
   for (const post of relevantReddit) {
     competitors.push({
@@ -122,9 +127,10 @@ export async function POST(req: Request) {
           .join("\n")
       : "No Reddit discussions found.";
 
-  const hnFiltered = hn.filter((s) =>
-    s.title.toLowerCase().includes(ideaKeyword)
-  );
+  const hnFiltered = hn.filter((s) => {
+    const lower = s.title.toLowerCase();
+    return ideaWords.length === 0 || ideaWords.some((word) => lower.includes(word));
+  });
   const hnSummary =
     hnFiltered.length > 0
       ? hnFiltered
@@ -134,7 +140,12 @@ export async function POST(req: Request) {
       : "No relevant HN stories found.";
 
   let aiAnalysis = "AI analysis unavailable — source data shown below.";
+  const hasApiKey = Boolean(process.env.OPENROUTER_API_KEY);
+  if (!hasApiKey) {
+    console.warn("[xray] OPENROUTER_API_KEY is not set — skipping AI analysis");
+  }
   try {
+    if (!hasApiKey) throw new Error("OPENROUTER_API_KEY not configured");
     const { text } = await generateText({
       model: openrouter("nvidia/nemotron-3-super-120b-a12b:free"),
       prompt: `You are a competitive intelligence analyst. A founder wants to understand the competitive landscape for this idea:
@@ -168,8 +179,9 @@ Be concise and cite specific products/repos from the data above. Do not invent c
       maxOutputTokens: 1800,
     });
     aiAnalysis = text;
-  } catch {
-    // AI failed but we still have source data
+  } catch (aiErr) {
+    // AI failed but we still have source data — log for Vercel visibility
+    console.error("[xray] AI analysis failed:", aiErr instanceof Error ? aiErr.message : aiErr);
   }
 
   return Response.json({

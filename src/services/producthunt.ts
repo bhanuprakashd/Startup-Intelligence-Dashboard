@@ -13,38 +13,65 @@ export async function searchProductHunt(query: string): Promise<ProductHuntSigna
   return cacheGetOrFetch(
     cacheKey,
     async () => {
-      // Use ProductHunt's public search page (no API key needed)
-      const url = `https://www.producthunt.com/search/posts?q=${encodeURIComponent(query)}`;
+      // ProductHunt's public search page (producthunt.com/search/posts?q=...) returns
+      // server-side-rendered HTML, not JSON. The official GraphQL API requires an API key
+      // (PRODUCTHUNT_API_KEY). Without it, we cannot retrieve structured product data.
+      //
+      // To enable ProductHunt results:
+      //   1. Create an app at https://www.producthunt.com/v2/oauth/applications
+      //   2. Set PRODUCTHUNT_API_KEY in your Vercel environment variables
+      //   3. Implement the GraphQL query below
+      //
+      // Until the key is configured, return an empty array so the rest of the
+      // X-Ray scan still works.
+      const apiKey = process.env.PRODUCTHUNT_API_KEY;
+      if (!apiKey) {
+        return [];
+      }
 
       try {
-        const res = await fetch(url, {
+        const graphqlQuery = `
+          query SearchPosts($query: String!) {
+            search(query: $query, first: 8) {
+              edges {
+                node {
+                  ... on Post {
+                    name
+                    tagline
+                    website
+                    createdAt
+                  }
+                }
+              }
+            }
+          }
+        `;
+
+        const res = await fetch("https://api.producthunt.com/v2/api/graphql", {
+          method: "POST",
           headers: {
-            "User-Agent": "WSI/1.0 startup-intelligence",
-            "Accept": "application/json",
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${apiKey}`,
           },
+          body: JSON.stringify({ query: graphqlQuery, variables: { query } }),
           signal: AbortSignal.timeout(10_000),
         });
 
         if (!res.ok) return [];
 
-        const text = await res.text();
+        const json = await res.json();
+        const edges = json?.data?.search?.edges ?? [];
 
-        // Try to parse as JSON first
-        try {
-          const json = JSON.parse(text);
-          if (Array.isArray(json)) {
-            return json.slice(0, 10).map((item: any) => ({
-              name: item.name ?? item.title ?? "Unknown",
-              tagline: item.tagline ?? item.description ?? "",
-              url: item.url ?? `https://www.producthunt.com`,
-              date: item.created_at ?? new Date().toISOString(),
-            }));
-          }
-        } catch {
-          // Not JSON — return empty, PH search may require auth
-        }
-
-        return [];
+        return edges
+          .map((edge: any) => edge?.node)
+          .filter(Boolean)
+          .slice(0, 8)
+          .map((item: any) => ({
+            name: item.name ?? "Unknown",
+            tagline: item.tagline ?? "",
+            url: item.website ?? "https://www.producthunt.com",
+            date: item.createdAt ?? new Date().toISOString(),
+          }));
       } catch {
         return [];
       }

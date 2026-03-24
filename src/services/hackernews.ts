@@ -26,6 +26,8 @@ export interface HNItem {
 const STARTUP_KEYWORDS = [
   "startup", "founder", "funding", "vc", "seed", "series",
   "yc", "launch", "saas", "ai", "fintech", "raise",
+  "product", "build", "company", "app", "platform", "tool",
+  "service", "market", "revenue", "growth", "tech",
 ];
 
 function isStartupRelated(title: string): boolean {

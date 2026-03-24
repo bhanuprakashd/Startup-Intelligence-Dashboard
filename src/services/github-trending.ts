@@ -18,13 +18,18 @@ export async function searchGitHub(query: string): Promise<GitHubSignal[]> {
   return cacheGetOrFetch(
     cacheKey,
     async () => {
-      // GitHub search API — free, no auth needed (60 req/hour)
+      // GitHub search API — 60 req/hour unauthenticated, 5000/hour with GITHUB_TOKEN
+      // Set GITHUB_TOKEN in Vercel env vars to avoid rate limits in production.
       const url = `https://api.github.com/search/repositories?q=${encodeURIComponent(query)}&sort=stars&order=desc&per_page=15`;
+      const headers: Record<string, string> = {
+        "User-Agent": "WSI/1.0",
+        "Accept": "application/vnd.github.v3+json",
+      };
+      if (process.env.GITHUB_TOKEN) {
+        headers["Authorization"] = `Bearer ${process.env.GITHUB_TOKEN}`;
+      }
       const res = await fetch(url, {
-        headers: {
-          "User-Agent": "WSI/1.0",
-          "Accept": "application/vnd.github.v3+json",
-        },
+        headers,
         signal: AbortSignal.timeout(10_000),
       });
 
