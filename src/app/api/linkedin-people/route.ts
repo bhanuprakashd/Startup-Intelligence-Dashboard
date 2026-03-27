@@ -51,11 +51,19 @@ export async function POST(req: Request) {
     );
   }
 
-  const profiles = await searchPeople(name.trim());
-  const aiInsights =
-    profiles.length === 0
-      ? "No profiles found. Try the full name (first + last), or this person may not be well-known enough for AI to have profile data."
-      : `Found ${profiles.length} profile${profiles.length !== 1 ? "s" : ""} matching "${name.trim()}". ${profiles[0]?.headline ? `Top match: ${profiles[0].name} — ${profiles[0].headline}.` : ""}`;
+  let profiles: PersonProfile[] = [];
+  let aiInsights = "";
+
+  try {
+    profiles = await searchPeople(name.trim());
+    aiInsights =
+      profiles.length === 0
+        ? "No profiles found in AI knowledge base. This person may not be a widely-known public figure. Use the LinkedIn search link below to find them directly."
+        : `Found ${profiles.length} profile${profiles.length !== 1 ? "s" : ""} matching "${name.trim()}". ${profiles[0]?.headline ? `Top match: ${profiles[0].name} — ${profiles[0].headline}.` : ""}`;
+  } catch (err) {
+    console.error("[linkedin-people] searchPeople failed:", err instanceof Error ? err.message : err);
+    aiInsights = "AI search unavailable. Use the LinkedIn search link below to find this person directly.";
+  }
 
 
   return Response.json(

@@ -285,20 +285,40 @@ function PeopleTab() {
             </div>
           </div>
 
-          {result.profiles.length > 0 ? (
+          {result.profiles.length > 0 && (
             <div className="glass gradient-border rounded-xl p-4">
               <div className="flex items-center gap-2 mb-3">
                 <Users className="h-4 w-4 text-blue-400" />
                 <h3 className="text-sm font-semibold">Profiles Found</h3>
                 <span className="text-2xs text-muted-foreground">{result.profiles.length} result{result.profiles.length !== 1 ? "s" : ""} for &ldquo;{result.name}&rdquo;</span>
               </div>
-              <div className="space-y-2">{result.profiles.map((p) => <PersonCard key={p.slug} profile={p} />)}</div>
-            </div>
-          ) : (
-            <div className="glass gradient-border rounded-xl p-4 text-center">
-              <p className="text-[12px] text-muted-foreground">No profiles found for <strong className="text-foreground">{result.name}</strong>. Try the full name.</p>
+              <div className="space-y-2">{result.profiles.map((p) => <PersonCard key={p.slug || p.name} profile={p} />)}</div>
             </div>
           )}
+
+          {/* Always show direct LinkedIn search link */}
+          <div className="glass gradient-border rounded-xl p-4">
+            <div className="flex items-center justify-between gap-3">
+              <div>
+                <p className="text-[12px] font-semibold text-foreground/90">Search LinkedIn directly</p>
+                <p className="text-[11px] text-muted-foreground mt-0.5">
+                  {result.profiles.length === 0
+                    ? "No AI results found — search LinkedIn to find this person manually."
+                    : "Verify or find more profiles on LinkedIn."}
+                </p>
+              </div>
+              <a
+                href={`https://www.linkedin.com/search/results/people/?keywords=${encodeURIComponent(result.name)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="shrink-0 flex items-center gap-1.5 rounded-lg bg-blue-500/10 px-3 py-2 text-[12px] font-medium text-blue-400 hover:bg-blue-500/20 transition-colors"
+              >
+                <Search className="h-3.5 w-3.5" />
+                Open LinkedIn
+                <ExternalLink className="h-3 w-3" />
+              </a>
+            </div>
+          </div>
         </div>
       )}
     </div>
