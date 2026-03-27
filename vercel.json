@@ -12,6 +12,7 @@
     "src/app/api/profile-match/route.ts": { "maxDuration": 300 },
     "src/app/api/landing/route.ts": { "maxDuration": 300 },
     "src/app/api/chat/route.ts": { "maxDuration": 300 },
-    "src/app/api/linkedin/route.ts": { "maxDuration": 300 }
+    "src/app/api/linkedin/route.ts": { "maxDuration": 300 },
+    "src/app/api/linkedin-people/route.ts": { "maxDuration": 300 }
   }
 }
