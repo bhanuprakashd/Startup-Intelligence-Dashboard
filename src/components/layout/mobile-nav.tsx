@@ -33,6 +33,7 @@ const ALL_NAV = [
   { id: "roadmap", label: "90-Day Roadmap" },
   { id: "profile", label: "Founder Match" },
   { id: "landing", label: "Landing Page" },
+  { id: "linkedin", label: "LinkedIn Intel" },
   { id: "opportunities", label: "Opportunities" },
   { id: "startups", label: "Startups" },
   { id: "sectors", label: "Sectors" },

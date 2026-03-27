@@ -23,6 +23,7 @@ import { NameGenerator } from "@/components/opportunities/name-generator";
 import { LaunchRoadmap } from "@/components/opportunities/launch-roadmap";
 import { FounderQuiz } from "@/components/opportunities/founder-quiz";
 import { LandingPreview } from "@/components/opportunities/landing-preview";
+import { LinkedInIntelligence } from "@/components/opportunities/linkedin-intelligence";
 import { ChatPanel } from "@/components/chat/chat-panel";
 import { MobileNav } from "@/components/layout/mobile-nav";
 import { REFRESH_INTERVALS } from "@/lib/constants";
@@ -86,6 +87,7 @@ export default function Dashboard() {
   const showRoadmap = activeSection === "roadmap";
   const showProfile = activeSection === "profile";
   const showLanding = activeSection === "landing";
+  const showLinkedin = activeSection === "linkedin";
 
   return (
     <div className="flex h-screen flex-col bg-[#0a0a0f]">
@@ -211,6 +213,13 @@ export default function Dashboard() {
           {showLanding && (
             <div className="mb-5">
               <LandingPreview />
+            </div>
+          )}
+
+          {/* LinkedIn Intelligence */}
+          {showLinkedin && (
+            <div className="mb-5">
+              <LinkedInIntelligence />
             </div>
           )}
 

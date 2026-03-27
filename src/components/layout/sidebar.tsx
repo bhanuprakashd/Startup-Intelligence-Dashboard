@@ -3,6 +3,7 @@
 import {
   BarChart3,
   Brain,
+  BriefcaseBusiness,
   DollarSign,
   Globe2,
   Layout,
@@ -32,6 +33,7 @@ const NAV_ITEMS = [
   { id: "roadmap", label: "90-Day Roadmap", icon: Map, badge: "NEW" },
   { id: "profile", label: "Founder Match", icon: Brain, badge: "NEW" },
   { id: "landing", label: "Landing Page", icon: Layout, badge: "NEW" },
+  { id: "linkedin", label: "LinkedIn Intel", icon: BriefcaseBusiness, badge: "NEW" },
   { id: "opportunities", label: "Opportunities", icon: Lightbulb, badge: "AI" },
   { id: "startups", label: "Startups", icon: Rocket, badge: null },
   { id: "sectors", label: "Sectors", icon: BarChart3, badge: null },
