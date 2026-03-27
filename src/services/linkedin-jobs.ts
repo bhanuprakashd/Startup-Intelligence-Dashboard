@@ -1,8 +1,19 @@
 import * as cheerio from "cheerio";
 import { cacheGetOrFetch, CACHE_TTL } from "./cache";
 
+export interface JobListing {
+  readonly id: string;
+  readonly title: string;
+  readonly company: string;
+  readonly location: string;
+  readonly employmentType: string;
+  readonly description: string;
+  readonly applyUrl: string;
+  readonly postedAt: string;
+  readonly source: string;
+}
+
 // Global semaphore — only one outbound LinkedIn scrape runs at a time
-// to avoid triggering LinkedIn's rate limiting / IP bans.
 let scrapeInProgress = false;
 const scrapeQueue: Array<() => void> = [];
 
@@ -28,18 +39,6 @@ function releaseSemaphore(): void {
 
 const delay = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
-export interface JobListing {
-  readonly id: string;
-  readonly title: string;
-  readonly company: string;
-  readonly location: string;
-  readonly employmentType: string;
-  readonly description: string;
-  readonly applyUrl: string;
-  readonly postedAt: string;
-  readonly source: string;
-}
-
 const HEADERS = {
   "User-Agent":
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36",
@@ -48,7 +47,6 @@ const HEADERS = {
 };
 
 async function fetchJobIds(company: string): Promise<string[]> {
-  // LinkedIn guest job search API — returns HTML cards
   const url = `https://www.linkedin.com/jobs-guest/jobs/api/seeMoreJobPostings/search?keywords=${encodeURIComponent(company)}&location=Worldwide&start=0&count=25`;
 
   const res = await fetch(url, {
@@ -59,22 +57,20 @@ async function fetchJobIds(company: string): Promise<string[]> {
   if (!res.ok) return [];
 
   const html = await res.text();
-  const $ = cheerio.load(html);
 
+  // Extract job IDs from data-entity-urn="urn:li:jobPosting:XXXXXXX"
   const ids: string[] = [];
-  $("li[data-entity-urn]").each((_, el) => {
-    const urn = $(el).attr("data-entity-urn") ?? "";
-    const match = urn.match(/(\d+)$/);
-    if (match) ids.push(match[1]);
-  });
+  const urnMatches = html.matchAll(/jobPosting:(\d+)/g);
+  for (const match of urnMatches) {
+    if (!ids.includes(match[1])) ids.push(match[1]);
+  }
 
-  // Fallback: parse job IDs from anchor hrefs
+  // Fallback: extract from href="/jobs/view/title-at-company-XXXXXXX"
   if (ids.length === 0) {
-    $("a[href*='/jobs/view/']").each((_, el) => {
-      const href = $(el).attr("href") ?? "";
-      const match = href.match(/\/jobs\/view\/(\d+)/);
-      if (match && !ids.includes(match[1])) ids.push(match[1]);
-    });
+    const hrefMatches = html.matchAll(/\/jobs\/view\/[^"]*?-(\d+)/g);
+    for (const match of hrefMatches) {
+      if (!ids.includes(match[1])) ids.push(match[1]);
+    }
   }
 
   return ids.slice(0, 20);
@@ -95,17 +91,19 @@ async function fetchJobDetail(jobId: string, company: string): Promise<JobListin
     const $ = cheerio.load(html);
 
     const title =
-      $(".top-card-layout__title").text().trim() ||
       $("h2.top-card-layout__title").text().trim() ||
+      $("h2.topcard__title").text().trim() ||
       $("h1").first().text().trim();
 
+    if (!title) return null;
+
     const companyName =
-      $(".topcard__org-name-link").text().trim() ||
+      $("a.topcard__org-name-link").text().trim() ||
       $(".top-card-layout__company").text().trim() ||
       company;
 
     const location =
-      $(".topcard__flavor--bullet").text().trim() ||
+      $("span.topcard__flavor--bullet").first().text().trim() ||
       $(".top-card-layout__bullet").text().trim() ||
       "Not specified";
 
@@ -113,15 +111,11 @@ async function fetchJobDetail(jobId: string, company: string): Promise<JobListin
       $(".show-more-less-html__markup").text().trim() ||
       $(".description__text").text().trim();
 
-    const postedAt =
-      $("time").attr("datetime") ||
-      $(".posted-time-ago__text").text().trim() ||
-      "";
+    const postedAt = $("time").attr("datetime") || "";
 
+    // Employment type is the first job criteria item
     const employmentType =
-      $(".job-criteria__text").first().text().trim() || "Full-time";
-
-    if (!title) return null;
+      $(".description__job-criteria-text").first().text().trim() || "Full-time";
 
     return {
       id: jobId,
@@ -145,7 +139,6 @@ export async function fetchCompanyJobs(company: string): Promise<JobListing[]> {
   return cacheGetOrFetch(
     cacheKey,
     async () => {
-      // Acquire semaphore — only one LinkedIn scrape at a time globally
       await acquireSemaphore();
 
       try {
@@ -156,13 +149,12 @@ export async function fetchCompanyJobs(company: string): Promise<JobListing[]> {
         for (const id of jobIds.slice(0, 12)) {
           const detail = await fetchJobDetail(id, company);
           if (detail) listings.push(detail);
-          await delay(600); // 600ms between each LinkedIn request
+          await delay(600);
         }
 
         return listings;
       } finally {
-        // Always release — even if an error is thrown
-        await delay(1_500); // extra cooldown before next scrape can start
+        await delay(1_500);
         releaseSemaphore();
       }
     },
