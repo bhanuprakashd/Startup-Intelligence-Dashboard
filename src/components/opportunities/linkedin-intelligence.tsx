@@ -75,6 +75,12 @@ function JobCard({ job }: { job: LinkedInResult["jobs"][number] }) {
   );
 }
 
+const CONFIDENCE_STYLE: Record<string, string> = {
+  high: "bg-emerald-500/10 text-emerald-400",
+  medium: "bg-amber-500/10 text-amber-400",
+  low: "bg-white/5 text-muted-foreground",
+};
+
 function PersonCard({ profile }: { profile: PeopleResult["profiles"][number] }) {
   return (
     <div className="rounded-lg bg-white/[0.02] border border-white/5 p-3 hover:border-white/10 transition-colors">
@@ -83,10 +89,15 @@ function PersonCard({ profile }: { profile: PeopleResult["profiles"][number] }) 
           <div className="shrink-0 flex h-8 w-8 items-center justify-center rounded-full bg-white/5 text-muted-foreground">
             <User className="h-4 w-4" />
           </div>
-          <div className="min-w-0">
-            <p className="text-[12px] font-semibold text-foreground/90">{profile.name}</p>
+          <div className="min-w-0 flex-1">
+            <div className="flex items-center gap-2 flex-wrap">
+              <p className="text-[12px] font-semibold text-foreground/90">{profile.name}</p>
+              <span className={cn("rounded-full px-1.5 py-0.5 text-3xs font-semibold", CONFIDENCE_STYLE[profile.confidence ?? "medium"])}>
+                {profile.confidence} confidence
+              </span>
+            </div>
             {profile.headline && (
-              <p className="mt-0.5 text-[11px] leading-snug text-foreground/60">{profile.headline}</p>
+              <p className="mt-0.5 text-[11px] leading-snug text-foreground/70">{profile.headline}</p>
             )}
             <div className="mt-1 flex flex-wrap items-center gap-2">
               {profile.company && (

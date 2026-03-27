@@ -1,13 +1,7 @@
-import { createOpenRouter } from "@openrouter/ai-sdk-provider";
-import { generateText } from "ai";
 import { searchPeople, type PersonProfile } from "@/services/linkedin-people";
 import { checkRateLimit } from "@/lib/rate-limiter";
 
 export const maxDuration = 300;
-
-const openrouter = createOpenRouter({
-  apiKey: process.env.OPENROUTER_API_KEY!,
-});
 
 export interface PeopleResult {
   readonly name: string;
@@ -58,47 +52,11 @@ export async function POST(req: Request) {
   }
 
   const profiles = await searchPeople(name.trim());
+  const aiInsights =
+    profiles.length === 0
+      ? "No profiles found. Try the full name (first + last), or this person may not be well-known enough for AI to have profile data."
+      : `Found ${profiles.length} profile${profiles.length !== 1 ? "s" : ""} matching "${name.trim()}". ${profiles[0]?.headline ? `Top match: ${profiles[0].name} — ${profiles[0].headline}.` : ""}`;
 
-  if (profiles.length === 0) {
-    return Response.json({
-      success: true,
-      data: {
-        name: name.trim(),
-        profiles: [],
-        aiInsights:
-          "No LinkedIn profiles found for this name. Try the full name (first + last) or check the spelling.",
-      },
-    });
-  }
-
-  const profileSummary = profiles
-    .map(
-      (p) =>
-        `- ${p.name} | ${p.headline || "No headline"} | ${p.location || "Location unknown"} | ${p.profileUrl}`
-    )
-    .join("\n");
-
-  let aiInsights = "AI analysis unavailable.";
-  try {
-    const { text } = await generateText({
-      model: openrouter("nvidia/nemotron-3-super-120b-a12b:free"),
-      prompt: `You are a startup intelligence analyst. Analyze these LinkedIn profiles found for the name "${name.trim()}":
-
-${profileSummary}
-
-Provide a brief analysis:
-1. **Most Likely Match** — Which profile is most likely the person being searched? Why?
-2. **Professional Summary** — What do these profiles tell us about the person(s)?
-3. **Industry & Expertise** — What industry/domain are they in? Key skills or focus areas?
-4. **Notable Signals** — Any interesting signals (career trajectory, company affiliations, seniority level)?
-
-Be concise. Base everything on the profiles above.`,
-      maxOutputTokens: 600,
-    });
-    aiInsights = text;
-  } catch (err) {
-    console.error("[linkedin-people] AI insights failed:", err instanceof Error ? err.message : err);
-  }
 
   return Response.json(
     {
