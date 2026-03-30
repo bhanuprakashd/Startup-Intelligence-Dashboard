@@ -4,7 +4,7 @@ import { searchReddit } from "@/services/reddit";
 import { searchGitHub } from "@/services/github-trending";
 import { getHNStories } from "@/services/hackernews";
 
-export const maxDuration = 60;
+export const maxDuration = 300;
 
 const openrouter = createOpenRouter({
   apiKey: process.env.OPENROUTER_API_KEY!,

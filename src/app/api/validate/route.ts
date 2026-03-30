@@ -3,7 +3,7 @@ import { generateText } from "ai";
 import { orchestrateQuery } from "@/services/orchestrator";
 import { triangulate } from "@/services/triangulation";
 
-export const maxDuration = 60;
+export const maxDuration = 300;
 
 const openrouter = createOpenRouter({
   apiKey: process.env.OPENROUTER_API_KEY!,
